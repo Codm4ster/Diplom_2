@@ -10,7 +10,7 @@ public class CreateUserTest {
     String token;
 
     @After
-    public void tearDown() {
+    public void deleteUser() {
         if (token != null) {
             user.deleteUser(token);
         }
@@ -39,8 +39,8 @@ public class CreateUserTest {
     }
 
     @Test
-    @DisplayName("Пользователя можно создать")
-    @Description("Проверка, что если в ручку передать все обязательные поля, то пользователя можно создать")
+    @DisplayName("Создание пользователя без указания почты")
+    @Description("Проверка, что если создать пользователя без указания почты, запрос возвращает ошибку")
     public void createUserWithoutParameterTest() {
         var client = CreateUser.random();
         client.setEmail("");
