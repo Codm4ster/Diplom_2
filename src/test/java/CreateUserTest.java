@@ -32,11 +32,10 @@ public class CreateUserTest {
     @Description("Проверка, что если создать пользователя, который уже есть, возвращается ошибка")
     public void createDuplicateUserTest() {
         var client = CreateUser.random();
-        user.createUser(client);
         ValidatableResponse createResponse = user.createUser(client);
-        check.createdDuplicateUser(createResponse);
-
         token = createResponse.extract().path("accessToken");
+        ValidatableResponse createDuplicateResponse = user.createUser(client);
+        check.createdDuplicateUser(createDuplicateResponse);
     }
 
     @Test
@@ -47,7 +46,5 @@ public class CreateUserTest {
         client.setEmail("");
         ValidatableResponse createResponse = user.createUser(client);
         check.createdUserWithoutParameter(createResponse);
-
-        token = createResponse.extract().path("accessToken");
     }
 }
