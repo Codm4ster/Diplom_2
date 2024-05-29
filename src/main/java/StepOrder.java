@@ -1,3 +1,5 @@
+package order;
+
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
@@ -8,7 +10,7 @@ public class StepOrder extends EnvConfig {
                 .header("Authorization", accessToken)
                 .body(order)
                 .when()
-                .post(ORDERS)
+                .post(EnvConfig.ORDERS)
                 .then().log().all();
     }
 
@@ -17,7 +19,7 @@ public class StepOrder extends EnvConfig {
         return spec()
                 .header("Authorization", accessToken)
                 .when()
-                .get(ORDERS)
+                .get(EnvConfig.ORDERS)
                 .then().log().all();
     }
 
@@ -25,7 +27,7 @@ public class StepOrder extends EnvConfig {
     public ValidatableResponse getOrderWithoutAuthorization() {
         return spec()
                 .when()
-                .get(ORDERS)
+                .get(EnvConfig.ORDERS)
                 .then().log().all();
     }
 }
