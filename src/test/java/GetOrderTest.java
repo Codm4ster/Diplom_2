@@ -26,7 +26,7 @@ public class GetOrderTest {
         user.createUser(client);
         ValidatableResponse loginResponse = user.loginUser(client);
         token = loginResponse.extract().path("accessToken");
-        burger = OrderGenerator.correctIngredients();
+        burger = IngredientsDto.correctIngredients();
         order.createOrder(burger, token);
         ValidatableResponse getOrderResponse = order.getOrderWithAuthorization(token);
         check.getOrderSuccessfully(getOrderResponse);
@@ -39,7 +39,7 @@ public class GetOrderTest {
         var client = CreateUser.random();
         ValidatableResponse createResponse = user.createUser(client);
         token = createResponse.extract().path("accessToken");
-        burger = OrderGenerator.correctIngredients();
+        burger = IngredientsDto.correctIngredients();
         order.createOrder(burger, token);
         ValidatableResponse getOrderResponse = order.getOrderWithoutAuthorization();
         check.getOrderWithoutAuthorised(getOrderResponse);

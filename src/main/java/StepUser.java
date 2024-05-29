@@ -1,4 +1,4 @@
-import io.qameta.allure.Step;
+﻿import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 public class StepUser extends EnvConfig {
@@ -21,7 +21,7 @@ public class StepUser extends EnvConfig {
                 .then().log().all();
     }
 
-    @Step("Изменение данных пользователя")
+    @Step("Изменение данных пользователя с авторизацией")
     public ValidatableResponse changeUser(CreateUser user, String accessToken) {
         return spec()
                 .header("Authorization", accessToken)
@@ -31,7 +31,7 @@ public class StepUser extends EnvConfig {
                 .then().log().all();
     }
 
-    @Step("Изменение данных пользователя")
+    @Step("Изменение данных пользователя без авторизации")
     public ValidatableResponse changeUserWithoutLogin(CreateUser user) {
         return spec()
                 .body(user)

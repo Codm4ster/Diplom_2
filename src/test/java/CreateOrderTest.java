@@ -26,7 +26,7 @@ public class CreateOrderTest {
         user.createUser(client);
         ValidatableResponse loginResponse = user.loginUser(client);
         token = loginResponse.extract().path("accessToken");
-        burger = OrderGenerator.correctIngredients();
+        burger = IngredientsDto.correctIngredients();
         ValidatableResponse createOrderResponse = order.createOrder(burger, token);
         check.createdOrderSuccessfully(createOrderResponse);
     }
@@ -38,7 +38,7 @@ public class CreateOrderTest {
         var client = CreateUser.random();
         ValidatableResponse createResponse = user.createUser(client);
         token = createResponse.extract().path("accessToken");
-        burger = OrderGenerator.correctIngredients();
+        burger = IngredientsDto.correctIngredients();
         ValidatableResponse createOrderResponse = order.createOrder(burger, token);
         check.createdOrderSuccessfully(createOrderResponse);
     }
@@ -51,7 +51,7 @@ public class CreateOrderTest {
         user.createUser(client);
         ValidatableResponse loginResponse = user.loginUser(client);
         token = loginResponse.extract().path("accessToken");
-        burger = OrderGenerator.correctIngredients();
+        burger = IngredientsDto.correctIngredients();
         burger.setIngredients(null);
         ValidatableResponse createOrderResponse = order.createOrder(burger, token);
         check.createdOrderWithoutIngredients(createOrderResponse);
@@ -65,7 +65,7 @@ public class CreateOrderTest {
         user.createUser(client);
         ValidatableResponse loginResponse = user.loginUser(client);
         token = loginResponse.extract().path("accessToken");
-        burger = OrderGenerator.wrongIngredients();
+        burger = IngredientsDto.wrongIngredients();
         ValidatableResponse createOrderResponse = order.createOrder(burger, token);
         check.createdOrderWithWrongIngredientsHash(createOrderResponse);
     }
