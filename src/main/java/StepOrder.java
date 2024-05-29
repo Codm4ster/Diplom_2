@@ -12,10 +12,18 @@ public class StepOrder extends EnvConfig {
                 .then().log().all();
     }
 
-    @Step("Получение заказа")
-    public ValidatableResponse getOrder(String accessToken) {
+    @Step("Получение заказа с авторизацией")
+    public ValidatableResponse getOrderWithAuthorization(String accessToken) {
         return spec()
                 .header("Authorization", accessToken)
+                .when()
+                .get(ORDERS)
+                .then().log().all();
+    }
+
+    @Step("Получение заказа без авторизации")
+    public ValidatableResponse getOrderWithoutAuthorization() {
+        return spec()
                 .when()
                 .get(ORDERS)
                 .then().log().all();
