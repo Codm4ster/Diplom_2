@@ -1,5 +1,3 @@
-package order;
-
 import io.qameta.allure.Step;
 
 public class OrderGenerator {

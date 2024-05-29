@@ -1,5 +1,3 @@
-package order;
-
 public class CreateOrder {
 
     private String[] ingredients;

@@ -1,8 +1,5 @@
-package user;
-
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import EnvConfig;
 
 public class StepUser extends EnvConfig {
 
@@ -11,7 +8,7 @@ public class StepUser extends EnvConfig {
         return spec()
                 .body(user)
                 .when()
-                .post(EnvConfig.REGISTER)
+                .post(REGISTER)
                 .then().log().all();
     }
 
@@ -20,7 +17,7 @@ public class StepUser extends EnvConfig {
         return spec()
                 .body(user)
                 .when()
-                .post(EnvConfig.LOGIN)
+                .post(LOGIN)
                 .then().log().all();
     }
 
@@ -30,7 +27,7 @@ public class StepUser extends EnvConfig {
                 .header("Authorization", accessToken)
                 .body(user)
                 .when()
-                .patch(EnvConfig.USER)
+                .patch(USER)
                 .then().log().all();
     }
 
@@ -39,7 +36,7 @@ public class StepUser extends EnvConfig {
         return spec()
                 .body(user)
                 .when()
-                .patch(EnvConfig.USER)
+                .patch(USER)
                 .then().log().all();
     }
 
@@ -48,7 +45,7 @@ public class StepUser extends EnvConfig {
         return spec()
                 .header("Authorization", accessToken)
                 .when()
-                .delete(EnvConfig.USER)
+                .delete(USER)
                 .then().log().all();
     }
 }
