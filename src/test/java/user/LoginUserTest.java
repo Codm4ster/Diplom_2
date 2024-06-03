@@ -1,3 +1,5 @@
+package user;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
@@ -7,12 +9,12 @@ import org.junit.Test;
 public class LoginUserTest {
     private final StepUser user = new StepUser();
     private final CheckUser check = new CheckUser();
-    String token;
+    String accessToken;
 
     @After
     public void deleteUser() {
-        if (token != null) {
-            user.deleteUser(token);
+        if (accessToken != null) {
+            user.deleteUser(accessToken);
         }
     }
 
@@ -25,7 +27,7 @@ public class LoginUserTest {
         ValidatableResponse loginResponse = user.loginUser(client);
         check.loggedInSuccessfully(loginResponse);
 
-        token = loginResponse.extract().path("accessToken");
+        accessToken = loginResponse.extract().path("accessToken");
     }
 
     @Test
@@ -34,7 +36,7 @@ public class LoginUserTest {
     public void loggedInUserWithoutEmailTest() {
         var client = CreateUser.random();
         ValidatableResponse createResponse = user.createUser(client);
-        token = createResponse.extract().path("accessToken");
+        accessToken = createResponse.extract().path("accessToken");
         client.setEmail("");
         ValidatableResponse loginResponse = user.loginUser(client);
         check.loggedInWithNotCorrectParameters(loginResponse);
@@ -46,7 +48,7 @@ public class LoginUserTest {
     public void loggedInUserWithoutPasswordTest() {
         var client = CreateUser.random();
         ValidatableResponse createResponse = user.createUser(client);
-        token = createResponse.extract().path("accessToken");
+        accessToken = createResponse.extract().path("accessToken");
         client.setPassword("");
         ValidatableResponse loginResponse = user.loginUser(client);
         check.loggedInWithNotCorrectParameters(loginResponse);

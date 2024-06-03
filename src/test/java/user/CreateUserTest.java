@@ -1,3 +1,5 @@
+package user;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
@@ -7,12 +9,12 @@ import org.junit.Test;
 public class CreateUserTest {
     private final StepUser user = new StepUser();
     private final CheckUser check = new CheckUser();
-    String token;
+    String accessToken;
 
     @After
     public void deleteUser() {
-        if (token != null) {
-            user.deleteUser(token);
+        if (accessToken != null) {
+            user.deleteUser(accessToken);
         }
     }
 
@@ -24,7 +26,7 @@ public class CreateUserTest {
         ValidatableResponse createResponse = user.createUser(client);
         check.createdSuccessfully(createResponse);
 
-        token = createResponse.extract().path("accessToken");
+        accessToken = createResponse.extract().path("accessToken");
     }
 
     @Test
@@ -33,7 +35,7 @@ public class CreateUserTest {
     public void createDuplicateUserTest() {
         var client = CreateUser.random();
         ValidatableResponse createResponse = user.createUser(client);
-        token = createResponse.extract().path("accessToken");
+        accessToken = createResponse.extract().path("accessToken");
         ValidatableResponse createDuplicateResponse = user.createUser(client);
         check.createdDuplicateUser(createDuplicateResponse);
     }

@@ -1,20 +1,24 @@
+package order;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Test;
+import user.CreateUser;
+import user.StepUser;
 
 public class CreateOrderTest {
     private final StepUser user = new StepUser();
     private final StepOrder order = new StepOrder();
     private final CheckOrder check = new CheckOrder();
     private CreateOrder burger = new CreateOrder();
-    String token;
+    String accessToken;
 
     @After
     public void deleteUser() {
-        if (token != null) {
-            user.deleteUser(token);
+        if (accessToken != null) {
+            user.deleteUser(accessToken);
         }
     }
 
@@ -25,9 +29,9 @@ public class CreateOrderTest {
         var client = CreateUser.random();
         user.createUser(client);
         ValidatableResponse loginResponse = user.loginUser(client);
-        token = loginResponse.extract().path("accessToken");
+        accessToken = loginResponse.extract().path("accessToken");
         burger = IngredientsDto.correctIngredients();
-        ValidatableResponse createOrderResponse = order.createOrder(burger, token);
+        ValidatableResponse createOrderResponse = order.createOrder(burger, accessToken);
         check.createdOrderSuccessfully(createOrderResponse);
     }
 
@@ -37,9 +41,9 @@ public class CreateOrderTest {
     public void createOrderWithoutLoggedTest() {
         var client = CreateUser.random();
         ValidatableResponse createResponse = user.createUser(client);
-        token = createResponse.extract().path("accessToken");
+        accessToken = createResponse.extract().path("accessToken");
         burger = IngredientsDto.correctIngredients();
-        ValidatableResponse createOrderResponse = order.createOrder(burger, token);
+        ValidatableResponse createOrderResponse = order.createOrder(burger, accessToken);
         check.createdOrderSuccessfully(createOrderResponse);
     }
 
@@ -50,10 +54,10 @@ public class CreateOrderTest {
         var client = CreateUser.random();
         user.createUser(client);
         ValidatableResponse loginResponse = user.loginUser(client);
-        token = loginResponse.extract().path("accessToken");
+        accessToken = loginResponse.extract().path("accessToken");
         burger = IngredientsDto.correctIngredients();
         burger.setIngredients(null);
-        ValidatableResponse createOrderResponse = order.createOrder(burger, token);
+        ValidatableResponse createOrderResponse = order.createOrder(burger, accessToken);
         check.createdOrderWithoutIngredients(createOrderResponse);
     }
 
@@ -64,9 +68,9 @@ public class CreateOrderTest {
         var client = CreateUser.random();
         user.createUser(client);
         ValidatableResponse loginResponse = user.loginUser(client);
-        token = loginResponse.extract().path("accessToken");
+        accessToken = loginResponse.extract().path("accessToken");
         burger = IngredientsDto.wrongIngredients();
-        ValidatableResponse createOrderResponse = order.createOrder(burger, token);
+        ValidatableResponse createOrderResponse = order.createOrder(burger, accessToken);
         check.createdOrderWithWrongIngredientsHash(createOrderResponse);
     }
 }

@@ -1,4 +1,7 @@
-﻿import io.qameta.allure.Step;
+package user;
+
+import configure.EnvConfig;
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 public class StepUser extends EnvConfig {
